@@ -37,7 +37,8 @@ sheet_is_publicly_readable <- TRUE
 # Is the goal of this knit to build a document that is exported to PDF? If so
 # set this to true to have links turned into footnotes at the end of the
 # document
-PDF_EXPORT <- FALSE
+PDF_EXPORT <- FALSE # don't want to sanitize links
+PDF <- FALSE # but want the text to be equivalent to the version ;)
 
 # Is this a resume or CV? 
 RESUME <- TRUE
@@ -95,7 +96,7 @@ Aside
 
 ```{r}
 # When in export mode the little dots are unaligned, so fix that. 
-if(PDF_EXPORT){
+if(PDF){
   glue("View this CV online with links at _{CV_HTML_LOC}_")
 } else {
   glue("[<i class='fas fa-download'></i> Download a PDF of this CV]({CV_PDF_LOC})")
@@ -157,7 +158,7 @@ position_data %>%
   print_section('education')
 ```
 
-Publications {data-icon=book}
+Publications {data-icon=book .page-break-before}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -165,7 +166,7 @@ position_data %>%
   print_section('academic_articles')
 ```
 
-Posters, and Talks {data-icon=comment-dots}
+Selected Posters, and Talks {data-icon=comment-dots}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -173,7 +174,7 @@ position_data %>%
   print_section('conferences')
 ```
 
-Awards and honours {data-icon=award}
+Selected Awards and honours {data-icon=award}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -197,6 +198,14 @@ position_data %>%
   print_section('summer_schools')
 ```
 
+Grants {data-icon=euro-sign}
+--------------------------------------------------------------------------------
+
+```{r}
+position_data %>%
+  print_section('grants')
+```
+
 Non profit work {data-icon=chart-line}
 --------------------------------------------------------------------------------
 
@@ -204,24 +213,3 @@ Non profit work {data-icon=chart-line}
 position_data %>%
   print_section('ngo')
 ```
-
-
-```{r}
-if(PDF_EXPORT){
-  cat("
-  
-Links {data-icon=link}
---------------------------------------------------------------------------------
-
-<br>
-
-
-")
-  
-  walk2(links, 1:length(links), function(link, index){
-    print(glue('{index}. {link}'))
-  })
-}
-```
-
-

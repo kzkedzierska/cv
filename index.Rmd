@@ -37,7 +37,8 @@ sheet_is_publicly_readable <- TRUE
 # Is the goal of this knit to build a document that is exported to PDF? If so
 # set this to true to have links turned into footnotes at the end of the
 # document
-PDF_EXPORT <- FALSE
+PDF_EXPORT <- FALSE # don't want to sanitize links
+PDF <- FALSE # but want the text to be equivalent to the version ;)
 
 # Is this a resume or CV? 
 RESUME <- FALSE
@@ -77,20 +78,6 @@ if (RESUME) {
 ```
 
 
-
-```{r}
-# When in export mode the little dots are unaligned, so fix that. 
-if(PDF_EXPORT){
-  cat("
-  <style>
-  :root{
-    --decorator-outer-offset-left: -6.5px;
-  }
-  </style>")
-}
-```
-
-
 Aside
 ================================================================================
 
@@ -99,7 +86,7 @@ Aside
 
 ```{r}
 # When in export mode the little dots are unaligned, so fix that. 
-if(PDF_EXPORT){
+if(PDF){
   glue("View this CV online with links at _{CV_HTML_LOC}_")
 } else {
   glue("[<i class='fas fa-download'></i> Download a PDF of this CV]({CV_PDF_LOC})")
@@ -202,30 +189,18 @@ position_data %>%
   print_section('summer_schools')
 ```
 
-Non profit work {data-icon=chart-line}
+Grants {data-icon=euro-sign}
+--------------------------------------------------------------------------------
+
+```{r}
+position_data %>%
+  print_section('grants')
+```
+
+Non profit work {data-icon=handshake}
 --------------------------------------------------------------------------------
 
 ```{r}
 position_data %>%
   print_section('ngo')
 ```
-
-```{r}
-if(PDF_EXPORT){
-  cat("
-  
-Links {data-icon=link}
---------------------------------------------------------------------------------
-
-<br>
-
-
-")
-  
-  walk2(links, 1:length(links), function(link, index){
-    print(glue('{index}. {link}'))
-  })
-}
-```
-
-
