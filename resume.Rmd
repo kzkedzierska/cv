@@ -43,6 +43,10 @@ PDF <- FALSE # but want the text to be equivalent to the version ;)
 # Is this a resume or CV? 
 RESUME <- TRUE
 
+CV_PDF_LOC <- "https://github.com/kzkedzierska/cv/raw/master/kzkedzierska_cv.pdf"
+CV_HTML_LOC <- "kasia.codes/cv/"
+
+
 # A global (gasp) variable that holds all the links that were inserted for
 # placement at the end
 links <- c()
@@ -70,20 +74,6 @@ if (RESUME) {
   # Location of PDF's
   CV_PDF_LOC <- "https://github.com/kzkedzierska/cv/raw/master/kzkedzierska_cv.pdf"
   CV_HTML_LOC <- "kasia.codes/cv/"
-}
-```
-
-
-
-```{r}
-# When in export mode the little dots are unaligned, so fix that. 
-if(PDF_EXPORT){
-  cat("
-  <style>
-  :root{
-    --decorator-outer-offset-left: -6.5px;
-  }
-  </style>")
 }
 ```
 
@@ -142,6 +132,7 @@ text_blocks %>%
   print_text_block('intro')
 ```
 
+
 Research Experience {data-icon=laptop-code}
 --------------------------------------------------------------------------------
 
@@ -150,15 +141,18 @@ position_data %>%
   print_section('research_positions')
 ```
 
-Education {data-icon=graduation-cap data-concise=true}
+Education {data-icon=graduation-cap data-concise=true} 
 --------------------------------------------------------------------------------
+```{r}
+#.page-break-before}
+```
 
 ```{r}
 position_data %>%
   print_section('education')
 ```
 
-Publications {data-icon=book .page-break-before}
+Publications {data-icon=book}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -166,7 +160,7 @@ position_data %>%
   print_section('academic_articles')
 ```
 
-Selected Posters, and Talks {data-icon=comment-dots}
+Posters, and Talks {data-icon=comment-dots}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -174,7 +168,7 @@ position_data %>%
   print_section('conferences')
 ```
 
-Selected Awards and honours {data-icon=award}
+Awards and honours {data-icon=award}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -190,10 +184,11 @@ position_data %>%
   print_section('teaching_positions')
 ```
 
-Attended Workshops, Summer Schools {data-icon=user-graduate}
+Attended Workshops, Summer Schools {data-icon=user-graduate} 
 --------------------------------------------------------------------------------
 
 ```{r}
+# .page-break-before}
 position_data %>%
   print_section('summer_schools')
 ```
@@ -206,10 +201,11 @@ position_data %>%
   print_section('grants')
 ```
 
-Non profit work {data-icon=chart-line}
+Non profit work {data-icon=handshake}
 --------------------------------------------------------------------------------
 
 ```{r}
 position_data %>%
-  print_section('ngo')
+  dplyr::filter(in_resume) %>%
+  print_section('ngo') 
 ```

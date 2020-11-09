@@ -181,10 +181,11 @@ position_data %>%
   print_section('teaching_positions')
 ```
 
-Attended Workshops, Summer Schools {data-icon=user-graduate .page-break-before}
+Attended Workshops, Summer Schools {data-icon=user-graduate} 
 --------------------------------------------------------------------------------
 
 ```{r}
+# .page-break-before}
 position_data %>%
   print_section('summer_schools')
 ```
@@ -202,5 +203,6 @@ Non profit work {data-icon=handshake}
 
 ```{r}
 position_data %>%
-  print_section('ngo')
+  dplyr::filter(in_resume) %>%
+  print_section('ngo') 
 ```
