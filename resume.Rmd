@@ -133,7 +133,7 @@ text_blocks %>%
 ```
 
 
-Research Experience {data-icon=laptop-code}
+Selected Research Experience {data-icon=laptop-code}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -152,7 +152,7 @@ position_data %>%
   print_section('education')
 ```
 
-Publications {data-icon=book}
+Selected Publications {data-icon=book data-concise=true}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -160,7 +160,7 @@ position_data %>%
   print_section('academic_articles')
 ```
 
-Posters, and Talks {data-icon=comment-dots}
+Selected Talks and Posters {data-icon=comment-dots data-concise=true}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -168,7 +168,7 @@ position_data %>%
   print_section('conferences')
 ```
 
-Awards and honours {data-icon=award}
+Selected Awards and Honours {data-icon=award}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -193,7 +193,7 @@ position_data %>%
   print_section('summer_schools')
 ```
 
-Grants {data-icon=euro-sign}
+Selected Grants {data-icon=euro-sign}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -201,7 +201,7 @@ position_data %>%
   print_section('grants')
 ```
 
-Non profit work {data-icon=handshake}
+Non-profit Work {data-icon=handshake}
 --------------------------------------------------------------------------------
 
 ```{r}

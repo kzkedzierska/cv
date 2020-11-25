@@ -165,7 +165,7 @@ position_data %>%
   print_section('conferences')
 ```
 
-Awards and honours {data-icon=award}
+Awards and honours {data-icon=award data-concise=true}
 --------------------------------------------------------------------------------
 
 ```{r}
