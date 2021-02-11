@@ -43,10 +43,6 @@ PDF <- FALSE # but want the text to be equivalent to the version ;)
 # Is this a resume or CV? 
 RESUME <- TRUE
 
-CV_PDF_LOC <- "https://github.com/kzkedzierska/cv/raw/master/kzkedzierska_cv.pdf"
-CV_HTML_LOC <- "kasia.codes/cv/"
-
-
 # A global (gasp) variable that holds all the links that were inserted for
 # placement at the end
 links <- c()
@@ -56,10 +52,10 @@ links <- c()
 # text output and the other loads up our data from either googlesheets or csvs
 
 # Functions for building sections from CSV data
-source('parsing_functions.R') 
+source('scripts/parsing_functions.R') 
 
 # Load data for CV/Resume
-source('gather_data.R')
+source('scripts/gather_data.R')
 
 # Now we just need to filter down the position data to include less verbose
 # categories and only the entries we have designated for the resume
@@ -67,14 +63,17 @@ if (RESUME) {
   position_data <- 
     position_data %>% 
     filter(in_resume)
-  # Location of PDF's
-  CV_PDF_LOC <- "https://github.com/kzkedzierska/cv/raw/master/kzkedzierska_resume.pdf"
-  CV_HTML_LOC <- "kasia.codes/resume/"
+  # set doc to resume, to refer to resume pdf and html
+  doc <- "resume"
 } else {
-  # Location of PDF's
-  CV_PDF_LOC <- "https://github.com/kzkedzierska/cv/raw/master/kzkedzierska_cv.pdf"
-  CV_HTML_LOC <- "kasia.codes/cv/"
+  # set doc to cv, to refer to resume pdf and html
+  doc <- "cv"
 }
+# Location of PDF
+CV_PDF_LOC <- glue("https://github.com/kzkedzierska/cv/raw/master/pdfs/",
+                   "kzkedzierska_{doc}.pdf")
+# Location of the website
+CV_HTML_LOC <- glue("kasia.codes/{doc}/")
 ```
 
 
@@ -87,7 +86,7 @@ Aside
 ```{r}
 # When in export mode the little dots are unaligned, so fix that. 
 if(PDF){
-  glue("View this CV online with links at _{CV_HTML_LOC}_")
+  glue("View this CV online on [{CV_HTML_LOC}](https://{CV_HTML_LOC})")
 } else {
   glue("[<i class='fas fa-download'></i> Download a PDF of this CV]({CV_PDF_LOC})")
 }
@@ -102,14 +101,14 @@ contact_info %>%
 ```
 
 
-
-Language Skills {#skills}
+Coding Skills {#skills}
 --------------------------------------------------------------------------------
 
 ```{r}
-build_skill_bars(skills)
+skills %>%
+  arrange(-level) %>%
+  build_skill_bars() 
 ```
-
 
 
 Disclaimer {#disclaimer}
@@ -133,7 +132,7 @@ text_blocks %>%
 ```
 
 
-Selected Research Experience {data-icon=laptop-code}
+Selected Research Experience {data-icon=laptop}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -152,7 +151,7 @@ position_data %>%
   print_section('education')
 ```
 
-Selected Publications {data-icon=book data-concise=true}
+Publications {data-icon=book data-concise=true}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -176,8 +175,14 @@ position_data %>%
   print_section('awards_and_honours')
 ```
 
-Teaching Experience {data-icon=chalkboard-teacher}
+Teaching Experience {data-icon=chalkboard-teacher .page-break-before}
 --------------------------------------------------------------------------------
+:::aside
+```{r}
+text_blocks %>% 
+  print_text_block('teaching_experience_aside')
+```
+:::
 
 ```{r}
 position_data %>%

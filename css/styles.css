@@ -50,7 +50,7 @@ sup {
   --sidebar-background-color: #dcedff; /* Tweek sidebar color */
   --sidebar-horizontal-padding: 0.01in; /* Reduce sidebar padding */
   --decorator-outer-dim: 10px; /* Make position deliniating circles larger */
-  --decorator-border: 2px solid #5b5f97; /* Make timeline a blue as well*/
+  --decorator-border: 2px solid #dcedff; /* Make timeline a blue as well*/
 }
 
 .details .place {
