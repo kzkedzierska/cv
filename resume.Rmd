@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 library(glue)
 library(tidyverse)
+library(googlesheets4)
 
 # ======================================================================
 # These variables determine how the the data is loaded and how the exports are
@@ -27,7 +28,9 @@ library(tidyverse)
 using_googlesheets <- TRUE
 
 # Just the copied URL from the sheet
-positions_sheet_loc <- "https://docs.google.com/spreadsheets/d/1-M-8hma20SSN51BiFkoIsSrakF2oDxwwnN-mbGYoztg/edit?usp=sharing"
+positions_sheet_loc <-  
+  glue("https://docs.google.com/spreadsheets/d/",  
+       "1-M-8hma20SSN51BiFkoIsSrakF2oDxwwnN-mbGYoztg/edit?usp=sharing")
 
 # Is this sheet available for anyone to read? If you're using a private sheet
 # set this to false and go to gather_data.R and run the data loading manually
@@ -175,10 +178,21 @@ position_data %>%
   print_section('awards_and_honours')
 ```
 
+Attended Workshops, Summer Schools {data-icon=user-graduate} 
+--------------------------------------------------------------------------------
+
+```{r}
+# .page-break-before}
+position_data %>%
+  print_section('summer_schools')
+```
+
+
 Teaching Experience {data-icon=chalkboard-teacher .page-break-before}
 --------------------------------------------------------------------------------
 :::aside
 ```{r}
+# .page-break-before}
 text_blocks %>% 
   print_text_block('teaching_experience_aside')
 ```
@@ -189,14 +203,6 @@ position_data %>%
   print_section('teaching_positions')
 ```
 
-Attended Workshops, Summer Schools {data-icon=user-graduate} 
---------------------------------------------------------------------------------
-
-```{r}
-# .page-break-before}
-position_data %>%
-  print_section('summer_schools')
-```
 
 Selected Grants {data-icon=euro-sign}
 --------------------------------------------------------------------------------
