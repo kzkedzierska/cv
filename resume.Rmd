@@ -91,7 +91,7 @@ Aside
 if(PDF){
   glue("View this CV online on [{CV_HTML_LOC}](https://{CV_HTML_LOC})")
 } else {
-  glue("[<i class='fas fa-download'></i> Download a PDF of this CV]({CV_PDF_LOC})")
+  glue("[<i class='fas fa-download'></i> Download a PDF of this Resume]({CV_PDF_LOC})")
 }
 ```
 
