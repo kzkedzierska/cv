@@ -188,7 +188,7 @@ position_data %>%
 ```
 
 
-Teaching Experience {data-icon=chalkboard-teacher .page-break-before}
+Teaching Experience {data-icon=chalkboard-teacher}
 --------------------------------------------------------------------------------
 :::aside
 ```{r}
