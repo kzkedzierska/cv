@@ -1,0 +1,100 @@
+install.packages("pagedown")
+knitr::opts_chunk$set(
+results = 'asis',
+echo = FALSE
+)
+library(glue)
+library(tidyverse)
+# ======================================================================
+# These variables determine how the the data is loaded and how the exports are
+# done.
+# Is data stored in google sheets? If no data will be gather from the csvs/
+# folder in project
+using_googlesheets <- TRUE
+# Just the copied URL from the sheet
+positions_sheet_loc <- "https://docs.google.com/spreadsheets/d/1-M-8hma20SSN51BiFkoIsSrakF2oDxwwnN-mbGYoztg/edit?usp=sharing"
+# Is this sheet available for anyone to read? If you're using a private sheet
+# set this to false and go to gather_data.R and run the data loading manually
+# once to cache authentication
+sheet_is_publicly_readable <- TRUE
+# Is the goal of this knit to build a document that is exported to PDF? If so
+# set this to true to have links turned into footnotes at the end of the
+# document
+PDF_EXPORT <- FALSE # don't want to sanitize links
+PDF <- FALSE # but want the text to be equivalent to the version ;)
+# Is this a resume or CV?
+RESUME <- FALSE
+CV_PDF_LOC <- "https://github.com/kzkedzierska/cv/raw/master/kzkedzierska_cv.pdf"
+CV_HTML_LOC <- "kasia.codes/cv/"
+# A global (gasp) variable that holds all the links that were inserted for
+# placement at the end
+links <- c()
+# ======================================================================
+# Now we source two external scripts. One contains functions for building the
+# text output and the other loads up our data from either googlesheets or csvs
+# Functions for building sections from CSV data
+source('parsing_functions.R')
+# Load data for CV/Resume
+source('gather_data.R')
+# Now we just need to filter down the position data to include less verbose
+# categories and only the entries we have designated for the resume
+if (RESUME) {
+position_data <-
+position_data %>%
+filter(in_resume)
+# Location of PDF's
+CV_PDF_LOC <- "https://github.com/kzkedzierska/cv/raw/master/kzkedzierska_resume.pdf"
+CV_HTML_LOC <- "kasia.codes/resume/"
+} else {
+# Location of PDF's
+CV_PDF_LOC <- "https://github.com/kzkedzierska/cv/raw/master/kzkedzierska_cv.pdf"
+CV_HTML_LOC <- "kasia.codes/cv/"
+}
+# When in export mode the little dots are unaligned, so fix that.
+if(PDF){
+glue("View this CV online with links at _{CV_HTML_LOC}_")
+} else {
+glue("[<i class='fas fa-download'></i> Download a PDF of this CV]({CV_PDF_LOC})")
+}
+contact_info %>%
+glue_data("- <i class='fa fa-{icon}'></i> {contact}")
+build_skill_bars(skills)
+text_blocks %>%
+print_text_block('intro')
+position_data %>%
+print_section('research_positions')
+position_data %>%
+print_section('education')
+position_data %>%
+print_section('academic_articles')
+position_data %>%
+print_section('conferences')
+position_data %>%
+print_section('awards_and_honours')
+position_data %>%
+print_section('teaching_positions')
+position_data %>%
+print_section('summer_schools')
+position_data %>%
+print_section('grants')
+position_data %>%
+print_section('ngo')
+position_data %>%
+print_section('ngo') %>%
+dplyr::filter(in_resume)
+position_data %>%
+dplyr::filter(in_resume) %>%
+print_section('ngo')
+# Used for nice prompts
+remotes::install_github("gaborcsardi/prompt")
+# Used for nice colours in the terminal; not for Windows
+remotes::install_github("jalvesaq/colorout")
+# install.packages("remotes")
+remotes::install_github("csgillespie/rprofile")
+# install.packages("remotes")
+remotes::install_github("csgillespie/rprofile")
+print("Hello")
+?rprofile::set_terminal()
+lsos()
+cd ..
+install.packages("googlesheets4")
