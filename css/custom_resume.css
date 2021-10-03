@@ -1,10 +1,11 @@
 
-* {
-  /* Override default right margin for sidebar*/
-  --pagedjs-margin-right: 0.2in !important;
-  --pagedjs-margin-left: 0;
-  --pagedjs-margin-top: 0.2in;
-  --pagedjs-margin-bottom: 0.2in;
+
+
+.pagedjs_page:not(:first-of-type) {
+  --sidebar-width: 0.2rem;
+  --sidebar-background-color: #f7fbff;
+  --main-width: calc(var(--content-width) - var(--sidebar-width));
+  --decorator-horizontal-margin: 0.2in;
 }
 
 [data-id="main"] { 

@@ -16,8 +16,15 @@ sanitize_links <- function(text){
     str_extract_all(text, find_link) %>% 
       pluck(1) %>% 
       walk(function(link_from_text){
-        title <- link_from_text %>% str_extract('\\[.+\\]') %>% str_remove_all('\\[|\\]') 
-        link <- link_from_text %>% str_extract('\\(.+\\)') %>% str_remove_all('\\(|\\)')
+        title <- 
+          link_from_text %>% 
+          str_extract('\\[.+\\]') %>% 
+          str_remove_all('\\[|\\]') 
+        
+        link <- 
+          link_from_text %>% 
+          str_extract('\\(.+\\)') %>% 
+          str_remove_all('\\(|\\)')
         
         # add link to links array
         links <<- c(links, link)
@@ -46,56 +53,44 @@ strip_links_from_cols <- function(data, cols_to_strip){
 
 # Take a position dataframe and the section id desired
 # and prints the section to markdown. 
-print_section <- function(position_data, section_id){
+print_section <- function(position_data, section_id) {
   position_data %>% 
     filter(section == section_id) %>% 
-    arrange(desc(end)) %>% 
+    arrange(desc(start)) %>% 
     mutate(id = 1:n()) %>% 
-    pivot_longer(
-      starts_with('description'),
-      names_to = 'description_num',
-      values_to = 'description'
-    ) %>% 
+    pivot_longer(starts_with('description'),
+                 names_to = 'description_num',
+                 values_to = 'description') %>% 
     filter(!is.na(description) | description_num == 'description_1') %>%
     group_by(id) %>% 
-    mutate(
-      descriptions = list(description),
-      no_descriptions = is.na(first(description))
-    ) %>% 
+    mutate(descriptions = list(description),
+           no_descriptions = is.na(first(description))) %>% 
     ungroup() %>% 
     filter(description_num == 'description_1') %>% 
-    mutate(
-      timeline = ifelse(
-        is.na(start) | start == end,
-        end,
-        glue('{end} - {start}')
-      ),
-      description_bullets = ifelse(
-        no_descriptions,
-        ' ',
-        map_chr(descriptions, ~paste('-', ., collapse = '\n'))
-      )
-    ) %>% 
+    mutate(end = ifelse(is.na(end), "present", end),
+           timeline = ifelse(is.na(start) | start == end,
+                             end,
+                             glue('{end} - {start}')),
+           description_bullets = ifelse(no_descriptions,
+                                        ' ',
+                                        map_chr(descriptions, 
+                                                ~paste('-', ., 
+                                                       collapse = '\n')))) %>% 
     strip_links_from_cols(c('title', 'description_bullets')) %>% 
     mutate_all(~ifelse(is.na(.), 'N/A', .)) %>% 
-    glue_data(
-      "### {title}",
-      "\n\n",
-      "{loc}",
-      "\n\n",
-      "{institution}",
-      "\n\n",
-      "{timeline}", 
-      "\n\n",
-      "{description_bullets}",
-      "\n\n\n",
-    )
-}
+    glue_data("### {title}",
+              "\n\n", "{loc}",
+              "\n\n", "{institution}",
+              "\n\n", "{timeline}", 
+              "\n\n", "{description_bullets}", "\n\n\n")
+  }
 
 # Construct a bar chart of skills
 build_skill_bars <- function(skills, out_of = 5){
-  bar_color <- "#5b5f97"
-  bar_background <- "#5b5f9740"
+  # --indigo-dye: #16425b;
+  #   --dark-sky-blue: #81c3d7;
+  bar_color <- "#16425b" #"#5b5f97"
+  bar_background <- "#81c3d7" #"#5b5f9740"
   skills %>% 
     mutate(width_percent = round(100 * level/out_of)) %>% 
     glue_data(

@@ -39,7 +39,7 @@ sheet_is_publicly_readable <- TRUE
 
 # Is the goal of this knit to build a document that is exported to PDF? If so
 # set this to true to have links turned into footnotes at the end of the
-# document
+# document+
 PDF_EXPORT <- FALSE # don't want to sanitize links
 PDF <- FALSE # but want the text to be equivalent to the version ;)
 
@@ -79,12 +79,21 @@ CV_PDF_LOC <- glue("https://github.com/kzkedzierska/cv/raw/master/pdfs/",
 CV_HTML_LOC <- glue("kasia.codes/{doc}/")
 ```
 
+<!-- taken from https://github.com/nstrayer/cv/issues/24 -->
+```{css, echo = FALSE}
+.pagedjs_page:not(:first-of-type) {
+  --sidebar-width: 0.01rem;
+  --sidebar-background-color: var(--timberwolf);
+  --main-width: calc(var(--content-width) - var(--sidebar-width));
+  --decorator-horizontal-margin: 0.2in;
+}
+```
 
 Aside
 ================================================================================
 
-
-![logo](logo.png){width=100%}
+<!-- ![pic](scratch/spirals_path-blues_greens-seed_90_cut.png) -->
+<!-- ![logo](logo.png){width=100%} -->
 
 ```{r}
 # When in export mode the little dots are unaligned, so fix that. 
@@ -109,6 +118,16 @@ Coding Skills {#skills}
 
 ```{r}
 skills %>%
+  arrange(-level) %>%
+  build_skill_bars() 
+```
+
+
+Languages {#languages}
+--------------------------------------------------------------------------------
+
+```{r}
+languages %>%
   arrange(-level) %>%
   build_skill_bars() 
 ```
@@ -190,13 +209,13 @@ position_data %>%
 
 Teaching Experience {data-icon=chalkboard-teacher}
 --------------------------------------------------------------------------------
-:::aside
-```{r}
-# .page-break-before}
-text_blocks %>% 
-  print_text_block('teaching_experience_aside')
-```
-:::
+<!-- :::aside -->
+<!-- ```{r} -->
+<!-- # .page-break-before} -->
+<!-- text_blocks %>%  -->
+<!--   print_text_block('teaching_experience_aside') -->
+<!-- ``` -->
+<!-- ::: -->
 
 ```{r}
 position_data %>%
