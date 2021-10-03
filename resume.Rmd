@@ -97,7 +97,7 @@ Aside
 
 ```{r}
 # When in export mode the little dots are unaligned, so fix that. 
-if(PDF){
+if (PDF) {
   glue("View this CV online on [{CV_HTML_LOC}](https://{CV_HTML_LOC})")
 } else {
   glue("[<i class='fas fa-download'></i> Download a PDF of this Resume]({CV_PDF_LOC})")
@@ -117,13 +117,13 @@ Coding Skills {#skills}
 --------------------------------------------------------------------------------
 
 ```{r}
-skills %>%
+programming %>%
   arrange(-level) %>%
   build_skill_bars() 
 ```
 
 
-Languages {#languages}
+Languages {#skills}
 --------------------------------------------------------------------------------
 
 ```{r}

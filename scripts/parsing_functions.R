@@ -12,7 +12,7 @@ find_link <- regex("
 # Function that removes links from text and replaces them with superscripts that are 
 # referenced in an end-of-document list. 
 sanitize_links <- function(text){
-  if(PDF_EXPORT){
+  if (PDF_EXPORT){
     str_extract_all(text, find_link) %>% 
       pluck(1) %>% 
       walk(function(link_from_text){
@@ -88,7 +88,7 @@ print_section <- function(position_data, section_id) {
 # Construct a bar chart of skills
 build_skill_bars <- function(skills, out_of = 5){
   # --indigo-dye: #16425b;
-  #   --dark-sky-blue: #81c3d7;
+  # --dark-sky-blue: #81c3d7;
   bar_color <- "#16425b" #"#5b5f97"
   bar_background <- "#81c3d7" #"#5b5f9740"
   skills %>% 

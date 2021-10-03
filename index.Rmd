@@ -117,11 +117,19 @@ Coding Skills {#skills}
 --------------------------------------------------------------------------------
 
 ```{r}
-skills %>%
+programming %>%
   arrange(-level) %>%
   build_skill_bars() 
 ```
 
+Languages {#skills}
+--------------------------------------------------------------------------------
+
+```{r}
+languages %>%
+  arrange(-level) %>%
+  build_skill_bars() 
+```
 
 
 Disclaimer {#disclaimer}

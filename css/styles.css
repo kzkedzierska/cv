@@ -77,9 +77,6 @@ sup {
   --pagedjs-margin-bottom: 0.5in;
 }
 
-
-
-
 .details .place {
   margin-top: 0.25rem;
 }
@@ -135,12 +132,11 @@ sup {
   color: var(--timberwolf);
   padding: 0.1rem 0.25rem;
   margin-top: 3px;
-  position: relative;
+  /* position: relative; */
   width: 100%;
   /* looked up here: https://github.com/andrewargeros/andrewargeros.github.io/blob/master/Back%20End%20Code/dd_cv.css */
-  border-radius:3.5rem;
+  border-radius: 3.5rem;
 }
-
 
 /* When the class no-timeline is added we remove the after psuedo element from the header... */
 
