@@ -97,7 +97,7 @@ Aside
 ```{r}
 # When in export mode the little dots are unaligned, so fix that. 
 if(PDF){
-  glue("View this CV online on [{CV_HTML_LOC}](https://{CV_HTML_LOC})")
+  glue("View this CV online </br> <i class='fas fa-globe'></i> [{CV_HTML_LOC}](https://{CV_HTML_LOC})")
 } else {
   glue("[<i class='fas fa-download'></i> Download a PDF of this CV]({CV_PDF_LOC})")
 }

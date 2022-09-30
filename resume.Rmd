@@ -97,10 +97,10 @@ Aside
 
 ```{r}
 # When in export mode the little dots are unaligned, so fix that. 
-if (PDF) {
-  glue("View this CV online on [{CV_HTML_LOC}](https://{CV_HTML_LOC})")
+if(PDF){
+  glue("View this Resume online </br> <i class='fas fa-globe'></i> [{CV_HTML_LOC}](https://{CV_HTML_LOC})")
 } else {
-  glue("[<i class='fas fa-download'></i> Download a PDF of this Resume]({CV_PDF_LOC})")
+  glue("[<i class='fas fa-download'></i> Download a PDF of this CV]({CV_PDF_LOC})")
 }
 ```
 
@@ -173,13 +173,17 @@ position_data %>%
   print_section('education')
 ```
 
-Publications {data-icon=book data-concise=true}
+Selected Publications {data-icon=book data-concise=true .page-break-before}
 --------------------------------------------------------------------------------
+
+Full list of publication on my Google Scholar profile [scholar.google.com/citations?user=Yv6poTwAAAAJ](https://scholar.google.com/citations?user=Yv6poTwAAAAJ&hl=en).
 
 ```{r}
 position_data %>%
   print_section('academic_articles')
 ```
+
+
 
 Selected Talks and Posters {data-icon=comment-dots data-concise=true}
 --------------------------------------------------------------------------------
