@@ -128,6 +128,11 @@ sup {
   content: auto;
 }
 
+/* Reduce the break in the right side column */
+.aside .level2 {
+  margin-top: 0.25in;
+}
+
 .skill-bar {
   color: var(--timberwolf);
   padding: 0.1rem 0.25rem;

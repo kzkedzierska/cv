@@ -122,6 +122,9 @@ programming %>%
   build_skill_bars() 
 ```
 
+R: `tidyverse`, `data.table`, `Shiny`, `plotly`, `tidymodels`, `caret` and others  
+Python: `NumPy`, `Pandas`, `SciPy`, `scikit-learn`, `keras`, `PyTorch`, `Seaborn`, `matplotlib` and more
+
 Languages {#skills}
 --------------------------------------------------------------------------------
 
