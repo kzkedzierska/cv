@@ -83,7 +83,136 @@ print_section <- function(position_data, section_id) {
               "\n\n", "{institution}",
               "\n\n", "{timeline}", 
               "\n\n", "{description_bullets}", "\n\n\n")
-  }
+}
+
+print_section_concise <- function(position_data, section_id) {
+  position_data %>% 
+    filter(section == section_id) %>% 
+    arrange(desc(start)) %>% 
+    mutate(id = 1:n()) %>% 
+    pivot_longer(starts_with('description'),
+                 names_to = 'description_num',
+                 values_to = 'description') %>% 
+    filter(!is.na(description) | description_num == 'description_1') %>%
+    group_by(id) %>% 
+    mutate(descriptions = list(description),
+           no_descriptions = is.na(first(description))) %>% 
+    ungroup() %>% 
+    filter(description_num == 'description_1') %>% 
+    mutate(end = ifelse(is.na(end), "present", end),
+           timeline = ifelse(is.na(start) | start == end,
+                             end,
+                             glue('{end} - {start}')),
+           description_bullets = ifelse(no_descriptions,
+                                        ' ',
+                                        map_chr(descriptions, 
+                                                ~paste('-', ., 
+                                                       collapse = '\n')))) %>% 
+    strip_links_from_cols(c('title', 'description_bullets')) %>% 
+    mutate_all(~ifelse(is.na(.), 'N/A', .)) %>% 
+    glue_data("### {title} @ {loc}",
+              "\n\n", "N/A",
+              "\n\n", "N/A",
+              "\n\n", "{timeline}", 
+              "\n\n", "{description_bullets}", "\n\n\n")
+}
+
+print_section_concise_swe <- function(position_data, section_id) {
+  position_data %>% 
+    filter(section == section_id) %>% 
+    arrange(desc(start)) %>% 
+    mutate(id = 1:n()) %>% 
+    pivot_longer(starts_with('description'),
+                 names_to = 'description_num',
+                 values_to = 'description') %>% 
+    filter(!is.na(description) | description_num == 'description_1') %>%
+    group_by(id) %>% 
+    mutate(descriptions = list(description),
+           no_descriptions = is.na(first(description))) %>% 
+    ungroup() %>% 
+    filter(description_num == 'description_1') %>% 
+    mutate(end = ifelse(is.na(end), "present", end),
+           timeline = ifelse(is.na(start) | start == end,
+                             end,
+                             glue('{end} - {start}')),
+           description_bullets = ifelse(no_descriptions,
+                                        ' ',
+                                        map_chr(descriptions, 
+                                                ~paste('-', ., 
+                                                       collapse = '\n')))) %>% 
+    strip_links_from_cols(c('title', 'description_bullets')) %>% 
+    mutate_all(~ifelse(is.na(.), 'N/A', .)) %>% 
+    glue_data("### {title} @ {loc}, {institution}",
+              "\n\n", "N/A",
+              "\n\n", "N/A",
+              "\n\n", "{timeline}", 
+              "\n\n", "{description_bullets}", "\n\n\n")
+}
+
+print_section_concise_talks <- function(position_data, section_id) {
+  position_data %>% 
+    filter(section == section_id) %>% 
+    arrange(desc(start)) %>% 
+    mutate(id = 1:n()) %>% 
+    pivot_longer(starts_with('description'),
+                 names_to = 'description_num',
+                 values_to = 'description') %>% 
+    filter(!is.na(description) | description_num == 'description_1') %>%
+    group_by(id) %>% 
+    mutate(descriptions = list(description),
+           no_descriptions = is.na(first(description))) %>% 
+    ungroup() %>% 
+    filter(description_num == 'description_1') %>% 
+    mutate(end = ifelse(is.na(end), "present", end),
+           timeline = ifelse(is.na(start) | start == end,
+                             end,
+                             glue('{end} - {start}')),
+           description_bullets = ifelse(no_descriptions,
+                                        ' ',
+                                        map_chr(descriptions, 
+                                                ~paste('-', ., 
+                                                       collapse = '\n')))) %>% 
+    strip_links_from_cols(c('title', 'description_bullets')) %>% 
+    mutate_all(~ifelse(is.na(.), 'N/A', .)) %>% 
+    glue_data("### {descriptions}: {title} @ {loc}",
+              "\n\n", "N/A",
+              "\n\n", "N/A",
+              "\n\n", "{timeline}", 
+              "\n\n", " ", "\n\n\n")
+}
+
+print_section_concise_pubs <- function(position_data, section_id) {
+  position_data %>% 
+    filter(section == section_id) %>% 
+    arrange(desc(start)) %>% 
+    mutate(id = 1:n()) %>% 
+    pivot_longer(starts_with('description'),
+                 names_to = 'description_num',
+                 values_to = 'description') %>% 
+    filter(!is.na(description) | description_num == 'description_1') %>%
+    group_by(id) %>% 
+    mutate(descriptions = list(description),
+           no_descriptions = is.na(first(description))) %>% 
+    ungroup() %>% 
+    filter(description_num == 'description_1') %>% 
+    mutate(end = ifelse(is.na(end), "present", end),
+           timeline = ifelse(is.na(start) | start == end,
+                             end,
+                             glue('{end} - {start}')),
+           description_bullets = ifelse(no_descriptions,
+                                        ' ',
+                                        map_chr(descriptions, 
+                                                ~paste('-', ., 
+                                                       collapse = '\n')))) %>% 
+    strip_links_from_cols(c('title', 'description_bullets')) %>% 
+    mutate_all(~ifelse(is.na(.), 'N/A', .)) %>% 
+    glue_data("### {title} @ {institution}",
+              "\n\n", "N/A",
+              "\n\n", "N/A",
+              "\n\n", "{timeline}", 
+              "\n\n", "{loc}", "\n\n\n")
+}
+
 
 # Construct a bar chart of skills
 build_skill_bars <- function(skills, out_of = 5){

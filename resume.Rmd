@@ -1,10 +1,10 @@
 ---
-title: "Kasia Kedzierska's CV"
+title: "Kasia Kedzierska's Resume"
 author: Kasia Kedzierska
 date: "`r Sys.Date()`"
 output:
   pagedown::html_resume:
-    css: ['css/styles.css', 'resume']
+    css: ['css/resume.css']
     # set it to true for a self-contained HTML page but it'll take longer to render
     self_contained: true
 ---
@@ -91,7 +91,8 @@ CV_HTML_LOC <- glue("kasia.codes/{doc}/")
 
 Aside
 ================================================================================
-
+<br>
+<br>
 <!-- ![pic](scratch/spirals_path-blues_greens-seed_90_cut.png) -->
 <!-- ![logo](logo.png){width=100%} -->
 
@@ -122,6 +123,9 @@ programming %>%
   build_skill_bars() 
 ```
 
+{#ml-skills}
+--------------------------------------------------------------------------------
+
 R: `tidyverse`, `data.table`, `Shiny`, `plotly`, `tidymodels`, `caret` and others  
 Python: `NumPy`, `Pandas`, `SciPy`, `scikit-learn`, `keras`, `PyTorch`, `Seaborn`, `matplotlib` and more
 
@@ -139,9 +143,7 @@ languages %>%
 Disclaimer {#disclaimer}
 --------------------------------------------------------------------------------
 
-Made with the R package [**pagedown**](https://github.com/rstudio/pagedown). 
-
-Based on the [Nick Strayer's CV package](https://github.com/nstrayer/cv); modified source code for this CV is available [here](https://github.com/kzkedzierska/cv).
+[CV source code](https://github.com/kzkedzierska/cv). Made with [pagedown](https://github.com/rstudio/pagedown), based on [nstrayer/cv](https://github.com/nstrayer/cv). 
 
 Last updated on `r Sys.Date()`.
 
@@ -157,12 +159,12 @@ text_blocks %>%
 ```
 
 
-Selected Research Experience {data-icon=laptop}
+Selected Work Experience {data-icon=laptop}
 --------------------------------------------------------------------------------
 
 ```{r}
 position_data %>%
-  print_section('research_positions')
+  print_section_concise_swe('research_positions')
 ```
 
 Education {data-icon=graduation-cap data-concise=true} 
@@ -173,36 +175,18 @@ Education {data-icon=graduation-cap data-concise=true}
 
 ```{r}
 position_data %>%
-  print_section('education')
+  print_section_concise_swe('education')
 ```
 
-Selected Publications {data-icon=book data-concise=true .page-break-before}
---------------------------------------------------------------------------------
-
-Full list of publication on my Google Scholar profile [scholar.google.com/citations?user=Yv6poTwAAAAJ](https://scholar.google.com/citations?user=Yv6poTwAAAAJ&hl=en).
-
-```{r}
-position_data %>%
-  print_section('academic_articles')
-```
-
-
-
-Selected Talks and Posters {data-icon=comment-dots data-concise=true}
---------------------------------------------------------------------------------
-
-```{r}
-position_data %>%
-  print_section('conferences')
-```
-
-Selected Awards and Honours {data-icon=award}
+Selected Awards and Honors {data-icon=award}
 --------------------------------------------------------------------------------
 
 ```{r}
 position_data %>%
   print_section('awards_and_honours')
 ```
+
+
 
 Attended Workshops, Summer Schools {data-icon=user-graduate} 
 --------------------------------------------------------------------------------
@@ -213,6 +197,25 @@ position_data %>%
   print_section('summer_schools')
 ```
 
+
+Selected Publications {data-icon=book data-concise=true .page-break-before}
+--------------------------------------------------------------------------------
+
+Full list of publication is available through my Google Scholar profile [scholar.google.com/citations?user=Yv6poTwAAAAJ](https://scholar.google.com/citations?user=Yv6poTwAAAAJ&hl=en).
+
+```{r}
+position_data %>%
+  print_section_concise_pubs('academic_articles')
+```
+
+
+Selected Conference Presentations {data-icon=comment-dots data-concise=true}
+--------------------------------------------------------------------------------
+
+```{r}
+position_data %>%
+  print_section_concise_talks('conferences')
+```
 
 Teaching Experience {data-icon=chalkboard-teacher}
 --------------------------------------------------------------------------------
@@ -226,7 +229,7 @@ Teaching Experience {data-icon=chalkboard-teacher}
 
 ```{r}
 position_data %>%
-  print_section('teaching_positions')
+  print_section_concise('teaching_positions')
 ```
 
 
@@ -235,7 +238,7 @@ Selected Grants {data-icon=euro-sign}
 
 ```{r}
 position_data %>%
-  print_section('grants')
+  print_section_concise('grants')
 ```
 
 Non-profit Work {data-icon=handshake}
@@ -244,5 +247,5 @@ Non-profit Work {data-icon=handshake}
 ```{r}
 position_data %>%
   dplyr::filter(in_resume) %>%
-  print_section('ngo') 
+  print_section_concise('ngo') 
 ```
