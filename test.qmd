@@ -1,0 +1,16 @@
+---
+title: "Test"
+format: html
+---
+
+::: {.grid}
+
+::: {.g-col-8}
+This column takes 2/3 of the page
+:::
+
+::: {.g-col-4}
+This column takes 1/3 of the page
+:::
+
+:::
