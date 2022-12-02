@@ -73,7 +73,7 @@ if (RESUME) {
   doc <- "cv"
 }
 # Location of PDF
-CV_PDF_LOC <- glue("https://github.com/kzkedzierska/cv/raw/master/pdfs/",
+CV_PDF_LOC <- glue("https://github.com/kzkedzierska/cv/raw/main/pdfs/",
                    "kzkedzierska_{doc}.pdf")
 # Location of the website
 CV_HTML_LOC <- glue("kasia.codes/{doc}/")
