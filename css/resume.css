@@ -143,7 +143,7 @@ img{
 #main{
   width: var(--main-width);
   padding: 0 0.25in 0 0.25in;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   float: left;
 }
 
@@ -184,7 +184,7 @@ h1, h2{
 }
 
 #title h3{
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 
 /* When we have links at bottom in a list make sure they actually are numbered */

@@ -12,7 +12,9 @@ output:
 ```{r, include=FALSE}
 knitr::opts_chunk$set(
   results = 'asis', 
-  echo = FALSE
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
 )
 
 library(glue)
@@ -28,19 +30,15 @@ library(googlesheets4)
 using_googlesheets <- TRUE
 
 # Just the copied URL from the sheet
-positions_sheet_loc <-  
-  glue("https://docs.google.com/spreadsheets/d/",  
-       "1-M-8hma20SSN51BiFkoIsSrakF2oDxwwnN-mbGYoztg/edit?usp=sharing")
+spreadsheet_id <- "1-M-8hma20SSN51BiFkoIsSrakF2oDxwwnN-mbGYoztg"
 
-# Is this sheet available for anyone to read? If you're using a private sheet
-# set this to false and go to gather_data.R and run the data loading manually
-# once to cache authentication
+# Is this sheet available for anyone to read? The code to read in data, 
+# including authorization, is located in the parsing_functions.R
 sheet_is_publicly_readable <- TRUE
 
 # Is the goal of this knit to build a document that is exported to PDF? If so
 # set this to true to have links turned into footnotes at the end of the
-# document+
-PDF_EXPORT <- FALSE # don't want to sanitize links
+# document
 PDF <- FALSE # but want the text to be equivalent to the version ;)
 
 # Is this a resume or CV? 
@@ -57,15 +55,9 @@ links <- c()
 # Functions for building sections from CSV data
 source('scripts/parsing_functions.R') 
 
-# Load data for CV/Resume
-source('scripts/gather_data.R')
-
 # Now we just need to filter down the position data to include less verbose
 # categories and only the entries we have designated for the resume
 if (RESUME) {
-  position_data <- 
-    position_data %>% 
-    filter(in_resume)
   # set doc to resume, to refer to resume pdf and html
   doc <- "resume"
 } else {
@@ -80,6 +72,7 @@ CV_HTML_LOC <- glue("kasia.codes/{doc}/")
 ```
 
 <!-- taken from https://github.com/nstrayer/cv/issues/24 -->
+
 ```{css, echo = FALSE}
 .pagedjs_page:not(:first-of-type) {
   --sidebar-width: 0.01rem;
@@ -89,11 +82,9 @@ CV_HTML_LOC <- glue("kasia.codes/{doc}/")
 }
 ```
 
-Aside
-================================================================================
-<br>
-<br>
-<!-- ![pic](scratch/spirals_path-blues_greens-seed_90_cut.png) -->
+# Aside
+
+<br> <br> <!-- ![pic](scratch/spirals_path-blues_greens-seed_90_cut.png) -->
 <!-- ![logo](logo.png){width=100%} -->
 
 ```{r}
@@ -105,147 +96,130 @@ if(PDF){
 }
 ```
 
-Contact {#contact}
---------------------------------------------------------------------------------
+## Contact {#contact}
 
 ```{r}
-contact_info %>% 
+read_sheet(spreadsheet_id, 
+           sheet = "contact_info", 
+           skip = 1) %>% 
   glue_data("- <i class='fa fa-{icon}'></i> {contact}")
 ```
 
-
-Coding Skills {#skills}
---------------------------------------------------------------------------------
+## Coding Skills {#skills}
 
 ```{r}
-programming %>%
+read_sheet(spreadsheet_id, 
+           sheet = "language_skills") %>% 
   arrange(-level) %>%
   build_skill_bars() 
 ```
 
-{#ml-skills}
---------------------------------------------------------------------------------
+##  {#ml-skills}
 
-R: `tidyverse`, `data.table`, `Shiny`, `plotly`, `tidymodels`, `caret` and others  
-Python: `NumPy`, `Pandas`, `SciPy`, `scikit-learn`, `keras\Tensorflow`, `PyTorch`, `Seaborn`, `matplotlib` and more
+R: `tidyverse`, `data.table`, `Shiny`, `plotly`, `tidymodels`, `caret` and
+others\
+Python: `NumPy`, `Pandas`, `SciPy`, `scikit-learn`, `keras\Tensorflow`,
+`PyTorch`, `Seaborn`, `matplotlib` and more
 
-Languages {#skills}
---------------------------------------------------------------------------------
+## Languages {#skills}
 
 ```{r}
-languages %>%
+read_sheet(spreadsheet_id, 
+           sheet = "languages") %>%
   arrange(-level) %>%
   build_skill_bars() 
 ```
 
-  
-    
-Disclaimer {#disclaimer}
---------------------------------------------------------------------------------
+## Disclaimer {#disclaimer}
 
-[CV source code](https://github.com/kzkedzierska/cv). Made with [pagedown](https://github.com/rstudio/pagedown), based on [nstrayer/cv](https://github.com/nstrayer/cv). 
+[CV source code](https://github.com/kzkedzierska/cv). Made with
+[pagedown](https://github.com/rstudio/pagedown), based on
+[nstrayer/cv](https://github.com/nstrayer/cv).
 
 Last updated on `r Sys.Date()`.
 
-Main
-================================================================================
+# Main
 
-Kasia Kedzierska {#title}
---------------------------------------------------------------------------------
+## Kasia Kedzierska {#title}
 
 ```{r}
-text_blocks %>% 
+read_sheet(spreadsheet_id, 
+           sheet = "text_blocks") %>% 
   print_text_block('intro')
 ```
 
-
-Selected Work Experience {data-icon=laptop}
---------------------------------------------------------------------------------
+## Selected Work Experience {data-icon="laptop"}
 
 ```{r}
-position_data %>%
-  print_section_concise_swe('research_positions')
+print_section(spreadsheet_id, "work", RESUME)
 ```
 
-Education {data-icon=graduation-cap data-concise=true} 
---------------------------------------------------------------------------------
+## Education {data-icon="graduation-cap" data-concise="true"}
+
 ```{r}
 #.page-break-before}
 ```
 
 ```{r}
-position_data %>%
-  print_section_concise_swe('education')
+print_section(spreadsheet_id, "education", RESUME)
 ```
 
-Selected Awards and Honors {data-icon=award}
---------------------------------------------------------------------------------
+## Selected Awards and Honors {data-icon="award"}
 
 ```{r}
-position_data %>%
-  print_section('awards_and_honours')
+print_section(spreadsheet_id, "awards", RESUME)
 ```
 
-
-
-Summer Schools & Hackathons {data-icon=user-graduate} 
---------------------------------------------------------------------------------
+## Summer Schools & Hackathons {data-icon="user-graduate"}
 
 ```{r}
 # .page-break-before}
-position_data %>%
-  print_section('summer_schools')
+print_section(spreadsheet_id, "hackathons", RESUME)
 ```
 
+## Selected Publications {.page-break-before data-icon="book" data-concise="true"}
 
-Selected Publications {data-icon=book data-concise=true .page-break-before}
---------------------------------------------------------------------------------
-
-Full list of publication is available through my Google Scholar profile [scholar.google.com/citations?user=Yv6poTwAAAAJ](https://scholar.google.com/citations?user=Yv6poTwAAAAJ&hl=en).
+Full list of publication is available through my Google Scholar profile
+[scholar.google.com/citations?user=Yv6poTwAAAAJ](https://scholar.google.com/citations?user=Yv6poTwAAAAJ&hl=en).
 
 ```{r}
-position_data %>%
-  print_section_concise_pubs('academic_articles')
+print_section(spreadsheet_id, "articles", RESUME)
 ```
 
-
-Selected Conference Presentations {data-icon=comment-dots data-concise=true}
---------------------------------------------------------------------------------
+## Selected Conference Presentations {data-icon="comment-dots" data-concise="true"}
 
 ```{r}
-position_data %>%
-  print_section_concise_talks('conferences')
+print_section(spreadsheet_id, "conferences", RESUME)
 ```
 
-Teaching Experience {data-icon=chalkboard-teacher}
---------------------------------------------------------------------------------
+## Selected Teaching Experience {data-icon="chalkboard-teacher"}
+
 <!-- :::aside -->
+
 <!-- ```{r} -->
+
 <!-- # .page-break-before} -->
+
 <!-- text_blocks %>%  -->
+
 <!--   print_text_block('teaching_experience_aside') -->
+
 <!-- ``` -->
+
 <!-- ::: -->
 
 ```{r}
-position_data %>%
-  print_section_concise('teaching_positions')
+print_section(spreadsheet_id, "teaching", RESUME)
 ```
 
-
-Selected Grants {data-icon=euro-sign}
---------------------------------------------------------------------------------
+## Selected Grants {data-icon="euro-sign"}
 
 ```{r}
-position_data %>%
-  print_section_concise('grants')
+print_section(spreadsheet_id, "grants", RESUME)
 ```
 
-Non-profit Work {data-icon=handshake}
---------------------------------------------------------------------------------
+## Non-profit Work {data-icon="handshake"}
 
 ```{r}
-position_data %>%
-  dplyr::filter(in_resume) %>%
-  print_section_concise('ngo') 
+print_section(spreadsheet_id, "ngo", RESUME)
 ```

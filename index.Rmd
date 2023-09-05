@@ -12,11 +12,14 @@ output:
 ```{r, include=FALSE}
 knitr::opts_chunk$set(
   results = 'asis', 
-  echo = FALSE
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
 )
 
 library(glue)
 library(tidyverse)
+library(googlesheets4)
 
 # ======================================================================
 # These variables determine how the the data is loaded and how the exports are
@@ -27,17 +30,15 @@ library(tidyverse)
 using_googlesheets <- TRUE
 
 # Just the copied URL from the sheet
-positions_sheet_loc <- "https://docs.google.com/spreadsheets/d/1-M-8hma20SSN51BiFkoIsSrakF2oDxwwnN-mbGYoztg/edit?usp=sharing"
+spreadsheet_id <- "1-M-8hma20SSN51BiFkoIsSrakF2oDxwwnN-mbGYoztg"
 
-# Is this sheet available for anyone to read? If you're using a private sheet
-# set this to false and go to gather_data.R and run the data loading manually
-# once to cache authentication
+# Is this sheet available for anyone to read? The code to read in data, 
+# including authorization, is located in the parsing_functions.R
 sheet_is_publicly_readable <- TRUE
 
 # Is the goal of this knit to build a document that is exported to PDF? If so
 # set this to true to have links turned into footnotes at the end of the
 # document
-PDF_EXPORT <- FALSE # don't want to sanitize links
 PDF <- FALSE # but want the text to be equivalent to the version ;)
 
 # Is this a resume or CV? 
@@ -54,16 +55,9 @@ links <- c()
 # Functions for building sections from CSV data
 source('scripts/parsing_functions.R') 
 
-# Load data for CV/Resume
-source('scripts/gather_data.R')
-
 # Now we just need to filter down the position data to include less verbose
 # categories and only the entries we have designated for the resume
-
 if (RESUME) {
-  position_data <- 
-    position_data %>% 
-    filter(in_resume)
   # set doc to resume, to refer to resume pdf and html
   doc <- "resume"
 } else {
@@ -76,7 +70,6 @@ CV_PDF_LOC <- glue("https://github.com/kzkedzierska/cv/raw/main/pdfs/",
 # Location of the website
 CV_HTML_LOC <- glue("kasia.codes/{doc}/")
 ```
-
 <!-- taken from https://github.com/nstrayer/cv/issues/24 -->
 ```{css, echo = FALSE}
 .pagedjs_page:not(:first-of-type) {
@@ -86,7 +79,6 @@ CV_HTML_LOC <- glue("kasia.codes/{doc}/")
   --decorator-horizontal-margin: 0.2in;
 }
 ```
-
 
 
 Aside
@@ -107,20 +99,22 @@ Contact {#contact}
 --------------------------------------------------------------------------------
 
 ```{r}
-contact_info %>% 
+read_sheet(spreadsheet_id, 
+           sheet = "contact_info", 
+           skip = 1) %>% 
   glue_data("- <i class='fa fa-{icon}'></i> {contact}")
 ```
-
-
 
 Coding Skills {#skills}
 --------------------------------------------------------------------------------
 
 ```{r}
-programming %>%
+read_sheet(spreadsheet_id, 
+           sheet = "language_skills") %>% 
   arrange(-level) %>%
   build_skill_bars() 
 ```
+
 
 R: `tidyverse`, `data.table`, `Shiny`, `plotly`, `tidymodels`, `caret` and others  
 Python: `NumPy`, `Pandas`, `SciPy`, `scikit-learn`, `keras/Tensorflow`, `PyTorch`, `Seaborn`, `matplotlib` and more
@@ -129,7 +123,8 @@ Languages {#skills}
 --------------------------------------------------------------------------------
 
 ```{r}
-languages %>%
+read_sheet(spreadsheet_id, 
+           sheet = "languages") %>%
   arrange(-level) %>%
   build_skill_bars() 
 ```
@@ -138,9 +133,9 @@ languages %>%
 Disclaimer {#disclaimer}
 --------------------------------------------------------------------------------
 
-Made with the R package [**pagedown**](https://github.com/rstudio/pagedown). 
-
-Based on the [Nick Strayer's CV package](https://github.com/nstrayer/cv); modified source code for this CV is available [here](https://github.com/kzkedzierska/cv).
+[CV source code](https://github.com/kzkedzierska/cv). Made with
+[pagedown](https://github.com/rstudio/pagedown), based on
+[nstrayer/cv](https://github.com/nstrayer/cv).
 
 Last updated on `r Sys.Date()`.
 
@@ -151,50 +146,47 @@ Kasia Kedzierska {#title}
 --------------------------------------------------------------------------------
 
 ```{r}
-text_blocks %>% 
+read_sheet(spreadsheet_id, 
+           sheet = "text_blocks") %>% 
   print_text_block('intro')
 ```
-
 
 Research Experience {data-icon=laptop-code}
 --------------------------------------------------------------------------------
 
 ```{r}
-position_data %>%
-  print_section('research_positions')
+print_section(spreadsheet_id, "work", RESUME)
 ```
 
 Education {data-icon=graduation-cap data-concise=true}
 --------------------------------------------------------------------------------
 
 ```{r}
-#.page-break-before}
-position_data %>%
-  print_section('education')
+print_section(spreadsheet_id, "education", RESUME)
 ```
 
 Publications {data-icon=book}
 --------------------------------------------------------------------------------
 
+Full list of publication is available through my Google Scholar profile
+[scholar.google.com/citations?user=Yv6poTwAAAAJ](https://scholar.google.com/citations?user=Yv6poTwAAAAJ&hl=en).
+
 ```{r}
-position_data %>%
-  print_section('academic_articles')
+print_section(spreadsheet_id, "articles", RESUME)
 ```
 
 Posters, and Talks {data-icon=comment-dots}
 --------------------------------------------------------------------------------
 
 ```{r}
-position_data %>%
-  print_section('conferences')
+print_section(spreadsheet_id, "conferences", RESUME)
 ```
 
-Awards and honours {data-icon=award data-concise=true}
+Awards {data-icon=award data-concise=true}
 --------------------------------------------------------------------------------
 
 ```{r}
-position_data %>%
-  print_section('awards_and_honours')
+print_section(spreadsheet_id, "awards", RESUME)
 ```
 
 Teaching Experience {data-icon=chalkboard-teacher}
@@ -207,32 +199,29 @@ Teaching Experience {data-icon=chalkboard-teacher}
 <!-- ::: -->
 
 ```{r}
-position_data %>%
-  print_section('teaching_positions')
+print_section(spreadsheet_id, "teaching", RESUME)
 ```
+
 
 Attended Workshops, Summer Schools {data-icon=user-graduate} 
 --------------------------------------------------------------------------------
 
 ```{r}
 # .page-break-before}
-position_data %>%
-  print_section('summer_schools')
+print_section(spreadsheet_id, "hackathons", RESUME)
 ```
 
 Grants {data-icon=euro-sign}
 --------------------------------------------------------------------------------
 
 ```{r}
-position_data %>%
-  print_section('grants')
+print_section(spreadsheet_id, "grants", RESUME)
 ```
 
 Non profit work {data-icon=handshake}
 --------------------------------------------------------------------------------
 
 ```{r}
-position_data %>%
-  dplyr::filter(in_resume) %>%
-  print_section('ngo') 
+print_section(spreadsheet_id, "ngo", RESUME)
 ```
+
