@@ -116,10 +116,15 @@ read_sheet(spreadsheet_id,
 
 ##  {#ml-skills}
 
-R: `tidyverse`, `data.table`, `Shiny`, `plotly`, `tidymodels`, `caret` and
+**Python**: \
+`PyTorch`, `keras`/`Tensorflow`, `scverse`/`scanpy`, `scikit-learn`, `NumPy`, `Pandas`,  `Seaborn`, `matplotlib` and more\
+\
+**R**:\
+`tidyverse`, `data.table`, `Shiny`, `plotly`, `tidymodels`, `caret` and
 others\
-Python: `NumPy`, `Pandas`, `SciPy`, `scikit-learn`, `keras\Tensorflow`,
-`PyTorch`, `Seaborn`, `matplotlib` and more
+\
+**High Performance / Cloud Computing**:\
+`SLURM`, `Sun Grid Engine (SGE)`, `Microsoft Azure`, `Azure Blob Storage`, `AWS Cloud Storage` and more
 
 ## Languages {#skills}
 

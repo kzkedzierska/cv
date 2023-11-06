@@ -39,7 +39,7 @@ sheet_is_publicly_readable <- TRUE
 # Is the goal of this knit to build a document that is exported to PDF? If so
 # set this to true to have links turned into footnotes at the end of the
 # document
-PDF <- FALSE # but want the text to be equivalent to the version ;)
+PDF <- FALSE # but want the text to be equivalent to the version 
 
 # Is this a resume or CV? 
 RESUME <- FALSE
@@ -116,8 +116,17 @@ read_sheet(spreadsheet_id,
 ```
 
 
-R: `tidyverse`, `data.table`, `Shiny`, `plotly`, `tidymodels`, `caret` and others  
-Python: `NumPy`, `Pandas`, `SciPy`, `scikit-learn`, `keras/Tensorflow`, `PyTorch`, `Seaborn`, `matplotlib` and more
+##  {#ml-skills}
+
+**Python**: \
+`PyTorch`, `keras`/`Tensorflow`, `scverse`/`scanpy`, `scikit-learn`, `NumPy`, `Pandas`,  `Seaborn`, `matplotlib` and more\
+\
+**R**:\
+`tidyverse`, `data.table`, `Shiny`, `plotly`, `tidymodels`, `caret` and
+others\
+\
+**High Performance / Cloud Computing**:\
+`SLURM`, `Sun Grid Engine (SGE)`, `Microsoft Azure`, `Azure Blob Storage`, `AWS Cloud Storage` and more
 
 Languages {#skills}
 --------------------------------------------------------------------------------
