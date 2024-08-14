@@ -124,7 +124,7 @@ read_sheet(spreadsheet_id,
 others\
 \
 **High Performance / Cloud Computing**:\
-`SLURM`, `Sun Grid Engine (SGE)`, `Microsoft Azure`, `Azure Blob Storage`, `AWS Cloud Storage` and more
+`SLURM`, `SGE`, `Google Cloud`, `Scaleway`, `Microsoft Azure`, `Azure Blob Storage`, `AWS Cloud Storage` and more
 
 ## Languages {#skills}
 
