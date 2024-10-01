@@ -2,3 +2,4 @@
 .Rhistory
 res/
 .secrets
+.DS_Store
