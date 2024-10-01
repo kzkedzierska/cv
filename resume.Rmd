@@ -41,7 +41,7 @@ sheet_is_publicly_readable <- TRUE
 # document
 PDF <- FALSE # but want the text to be equivalent to the version ;)
 
-# Is this a resume or CV? 
+# Is this a resume or  CV? 
 RESUME <- TRUE
 
 # A global (gasp) variable that holds all the links that were inserted for
@@ -117,7 +117,7 @@ read_sheet(spreadsheet_id,
 ##  {#ml-skills}
 
 **Python**: \
-`PyTorch`, `keras`/`Tensorflow`, `scverse`/`scanpy`, `scikit-learn`, `NumPy`, `Pandas`,  `Seaborn`, `matplotlib` and more\
+`PyTorch`, `Lightning`, `scverse`/`scanpy`, `scikit-learn`, `NumPy`, `Pandas`,  `Seaborn`, `matplotlib` and more\
 \
 **R**:\
 `tidyverse`, `data.table`, `Shiny`, `plotly`, `tidymodels`, `caret` and
@@ -169,18 +169,19 @@ print_section(spreadsheet_id, "work", RESUME)
 print_section(spreadsheet_id, "education", RESUME)
 ```
 
+## Selected Conference Presentations {data-icon="comment-dots" data-concise="true"}
+
+```{r}
+print_section(spreadsheet_id, "conferences", RESUME)
+```
+
+
 ## Selected Awards and Honors {data-icon="award"}
 
 ```{r}
 print_section(spreadsheet_id, "awards", RESUME)
 ```
 
-## Summer Schools & Hackathons {data-icon="user-graduate"}
-
-```{r}
-# .page-break-before}
-print_section(spreadsheet_id, "hackathons", RESUME)
-```
 
 ## Selected Publications {.page-break-before data-icon="book" data-concise="true"}
 
@@ -191,11 +192,14 @@ Full list of publication is available through my Google Scholar profile
 print_section(spreadsheet_id, "articles", RESUME)
 ```
 
-## Selected Conference Presentations {data-icon="comment-dots" data-concise="true"}
+
+## Summer Schools & Hackathons {data-icon="user-graduate"}
 
 ```{r}
-print_section(spreadsheet_id, "conferences", RESUME)
+# .page-break-before}
+print_section(spreadsheet_id, "hackathons", RESUME)
 ```
+
 
 ## Selected Teaching Experience {data-icon="chalkboard-teacher"}
 
