@@ -8,13 +8,14 @@ strong, b {
 
 /* Customize some of the sizing variables */
 :root {
-  --eerie-black: #1F211C;
-  --lapis-lazuli: #2f6690;
-  --steel-blue: #3a7ca5;
-  --timberwolf: #d9dcd6;
-  --indigo-dye: #16425b;
-  --dark-sky-blue: #81c3d7;
-  --light-cornflower-blue: #8ecae6;
+    --eerie-black: #1a1a1a;        /* Slightly softened black for text */
+  --lapis-lazuli: #2e3b1f;       /* Darker, richer olive for headings */
+  --steel-blue: #6b3e1d;         /* Deeper brown accent for visual weight */
+  --timberwolf: #dcdccc;         /* Lightened sidebar for better contrast */
+  --indigo-dye: #3b402d;         /* Keep or darken slightly for consistency */
+  --dark-sky-blue: #a36d32;      /* Slightly brighter for subtle highlights */
+  --light-cornflower-blue: #baa07d; /* Slightly lighter to maintain warmth */
+  --timeline-blue: #909c6a;      /* Make more olive/less gray for harmony */
   --sidebar-width: 12rem; /* Shrink sidebar width  */
   --sidebar-background-color: var(--timberwolf); /* Tweek sidebar color */
   --sidebar-horizontal-padding: 0.01in; /* Reduce sidebar padding */
@@ -124,8 +125,28 @@ sup {
 }
 
 /* Make little circle outline be a light blue */
-.decorator::after {
-  background-color: #5b5f97;
+.decorator::before{
+  position: absolute;
+  top: var(--decorator-outer-offset-top);
+  left: var(--decorator-outer-offset-left);
+  content: ' ';
+  display: block;
+  width: var(--decorator-outer-dim);
+  height: var(--decorator-outer-dim);
+  border-radius: calc(var(--decorator-outer-dim) / 2);
+  background-color: #fff;
+}
+
+.decorator::after{
+  position: absolute;
+  top: calc(var(--decorator-outer-offset-top) + var(--decorator-border-width));
+  left: calc(var(--decorator-outer-offset-left) + var(--decorator-border-width));
+  content: ' ';
+  display: block;
+  width: calc(var(--decorator-outer-dim) - (var(--decorator-border-width) * 2));
+  height: calc(var(--decorator-outer-dim) - (var(--decorator-border-width) * 2));
+  border-radius: calc((var(--decorator-outer-dim) - (var(--decorator-border-width) * 2)) / 2);
+  background-color: #555;
 }
 
 /* Remove the fake bullets from lists */

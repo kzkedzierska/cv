@@ -29,6 +29,8 @@ library(googlesheets4)
 # folder in project
 using_googlesheets <- TRUE
 
+fontawesome::fa_html_dependency()
+
 # Just the copied URL from the sheet
 spreadsheet_id <- "1-M-8hma20SSN51BiFkoIsSrakF2oDxwwnN-mbGYoztg"
 
@@ -117,14 +119,14 @@ read_sheet(spreadsheet_id,
 ##  {#ml-skills}
 
 **Python**: \
-`PyTorch`, `Lightning`, `scverse`/`scanpy`, `scikit-learn`, `NumPy`, `Pandas`,  `Seaborn`, `matplotlib` and more\
+`PyTorch`, `Lightning`, `Tensorflow`, `keras`, `scverse`/`scanpy`, `scikit-learn`, `NumPy`, `Pandas`,  `Seaborn`, `matplotlib` and more\
 \
 **R**:\
 `tidyverse`, `data.table`, `Shiny`, `plotly`, `tidymodels`, `caret` and
 others\
 \
-**High Performance / Cloud Computing**:\
-`SLURM`, `SGE`, `Google Cloud`, `Scaleway`, `Microsoft Azure`, `Azure Blob Storage`, `AWS Cloud Storage` and more
+**Cloud Computing/HPC**:\
+`SLURM`, `SGE`, `GCP`, `AWS`, `Scaleway`, `Microsoft Azure`, `Azure Blob Storage`, `AWS Cloud Storage` and more
 
 ## Languages {#skills}
 
@@ -134,6 +136,7 @@ read_sheet(spreadsheet_id,
   arrange(-level) %>%
   build_skill_bars() 
 ```
+
 
 ## Disclaimer {#disclaimer}
 
@@ -156,7 +159,7 @@ read_sheet(spreadsheet_id,
 ## Selected Work Experience {data-icon="laptop"}
 
 ```{r}
-print_section(spreadsheet_id, "work", RESUME)
+print_section(spreadsheet_id, "work", RESUME, include_months = TRUE)
 ```
 
 ## Education {data-icon="graduation-cap" data-concise="true"}
@@ -227,7 +230,7 @@ print_section(spreadsheet_id, "teaching", RESUME)
 print_section(spreadsheet_id, "grants", RESUME)
 ```
 
-## Non-profit Work {data-icon="handshake"}
+<!-- ## Non-profit Work {data-icon="handshake"} -->
 
 ```{r}
 print_section(spreadsheet_id, "ngo", RESUME)
